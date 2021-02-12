@@ -2,43 +2,78 @@ import React, { Component } from 'react';
 import './Counter.css'
 
 
+
 class Counter extends Component {
 
-    // Define the initial state in a constructor
-    // state => counter 0
-
     constructor() {
-        super(); // Error 1
+        super();
 
         this.state = {
-            counter: 0,
-            secondCounter: 100
+            counter: 0
         }
 
         this.increment = this.increment.bind(this);
     }
 
-    render = () => {
+    render() {
         return (
-            <div className="counter" >
-                <button onClick={this.increment} >+1</button>
+            <div className="Counter" >
+                <CounterButton by={1} incrementMethod={this.increment} />
+                <CounterButton by={5} incrementMethod={this.increment} />
+                <CounterButton by={10} incrementMethod={this.increment} />
                 <span className="count">{this.state.counter}</span>
-                <span className="count">{this.state.secondCounter}</span>
-            </div >
+            </div>
         );
     }
 
-    increment = () => { //update state - counter++
-        //console.log('increment');
-        //this.state.counter++; // bad practice
+    increment(by) {
+        //console.log(`increment from parent - ${by}`)
         this.setState({
-            counter: this.state.counter + 1,
-            secondCounter: this.state.secondCounter + 1
+            counter: this.state.counter + by
         });
     }
+
 
 }
 
 
+class CounterButton extends Component {
+
+    // Define the initial state in a constructor
+    // state => counter 0       
+
+    constructor() {
+        super();                // Error 1
+
+        this.state = {
+            counter: 0
+        }
+
+        this.increment = this.increment.bind(this);
+    }
+
+    render() {
+        //render = () => {
+        //let style = { fontSize: "50px", padding: "15px 30px" }
+        return (
+            <div className="counter" >
+                <button onClick={this.increment} >+{this.props.by}</button>
+            </div >
+        );
+    }
+
+    increment() {
+        this.setState({
+            counter: this.state.counter + this.props.by
+        });
+
+        this.props.incrementMethod(this.props.by);
+    }
+
+}
+
+CounterButton.defaultProps = {
+    by: 1
+}
 
 export default Counter;

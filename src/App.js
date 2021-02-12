@@ -19,7 +19,6 @@ class App extends Component {
 
 class LearningComponents extends Component {
 
-
   render() {
     return (
       <div className="LearningComponents">
